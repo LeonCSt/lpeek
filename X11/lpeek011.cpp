@@ -1,5 +1,5 @@
 /*  lpeek011.cpp:  A file viewer
-    g++ -I/usr/include/freetype2 lpeek011.cpp lpeek012.cpp -o lpeek -lX11 -lXext -lfreetype
+    g++ -DCONF_DIR='""' -DSHARE_DIR='""' -I/usr/include/freetype2 lpeek011.cpp lpeek012.cpp -o lpeek -lX11 -lXext -lfreetype
        - - - - - -   prefix with the following for debug   - - - - - -
     g++ -fsanitize=address -fno-omit-frame-pointer -g -O1 . . . 
     g++ -fsanitize=thread -g -O1 . . .
@@ -872,45 +872,45 @@ int main() {
       case KeyPress:
         XLookupString(&evnt.xkey, &text, 1, &key, 0);
         if (key == XK_Control_L) lftctl = true;
-	if (!redraw || mode != 0) break;
-	if (key == XK_w || key == XK_Prior || key == XK_KP_Prior) {
+        if (!redraw || mode != 0) break;
+        if (key == XK_w || key == XK_Prior || key == XK_KP_Prior) {
           vNdx -= accelerate; if (vNdx < 0) vNdx = 0;
           scroll_page();
-	  accelerate *= 1.2;
-	  if (accelerate < 6) accelerate = 6;
+          accelerate *= 1.2;
+          if (accelerate < 6) accelerate = 6;
         }
         else if (key == XK_s || key == XK_Next || key == XK_KP_Next) {
           vNdx += accelerate; if (vNdx > vMax) vNdx = vMax;
           scroll_page();
-	  accelerate *= 1.2;
-	  if (accelerate < 6) accelerate = 6;
+          accelerate *= 1.2;
+          if (accelerate < 6) accelerate = 6;
         }
         else if ((key == XK_Left || key == XK_KP_Left || key == XK_h)
                 && loc > 0) {
           loc--; colm = loc % wide; row = loc / wide;
           draw_details();
-	}
+        }
         else if ((key == XK_Right || key == XK_KP_Right || key == XK_l)
                 && loc < locMx) {
           loc++;
-	  if (loc + PgStart >= fsz) loc = fsz - PgStart - 1;
+          if (loc + PgStart >= fsz) loc = fsz - PgStart - 1;
           colm = loc % wide; row = loc / wide;
           draw_details();
-	}
-	else if (key == XK_Up || key == XK_KP_Up || key == XK_k) {
-	  if (row < 1 && vNdx > 0) { vNdx--; scroll_page(); }
-	  else if (loc >= wide) { loc -= wide ; colm = loc % wide;
-		  row = loc / wide; draw_details(); }
-	}
-	else if (key == XK_Down || key == XK_KP_Down || key == XK_j) {
-	  if (row > deep - 2 && vNdx < vMax) { vNdx++; scroll_page(); }
-	  else if (loc <= locMx - wide && loc < fsz - PgStart - wide) {
+        }
+        else if (key == XK_Up || key == XK_KP_Up || key == XK_k) {
+          if (row < 1 && vNdx > 0) { vNdx--; scroll_page(); }
+          else if (loc >= wide) { loc -= wide ; colm = loc % wide;
+                  row = loc / wide; draw_details(); }
+        }
+        else if (key == XK_Down || key == XK_KP_Down || key == XK_j) {
+          if (row > deep - 2 && vNdx < vMax) { vNdx++; scroll_page(); }
+          else if (loc <= locMx - wide && loc < fsz - PgStart - wide) {
             loc += wide ; colm = loc % wide; row = loc / wide;
-	    draw_details();
-	  }
-	}
-	else if (key == XK_n && txtH > 16) { txtH--; zoom(true); }
-	else if (key == XK_m && txtH < maxTxtH) { txtH++; zoom(true); }
+            draw_details();
+          }
+        }
+        else if (key == XK_n && txtH > 16) { txtH--; zoom(true); }
+        else if (key == XK_m && txtH < maxTxtH) { txtH++; zoom(true); }
         break;
       case KeyRelease:
         if (mode == 1) break;
@@ -932,28 +932,28 @@ int main() {
           if (wide < 40 || deep < 6) {
             mode = 100; tmr = 800;
             strng = "Please enlarge window."; launch_dialog();
-	  }
+          }
           else {
             i = find_string(setts, "InfoMsg=", stsz) + 1;
             if (i == 0) {
               strng = "lpeek.conf|.lpeekrc is missing InfoMsg=";
-	      tmr = 1200; mode = 201; launch_dialog();
-	    }
-	    else {
-	      mode = 101;
+              tmr = 1600; mode = 201; launch_dialog();
+            }
+            else {
+              mode = 101;
               strng = getstr(&setts[i], stsz - i);
               launch_dialog();
-	    }
-	  }
+            }
+          }
         }
-	else if (key == XK_f && redraw) {
+        else if (key == XK_f && redraw) {
           if (wide < 40 || deep < 6) { mode = 100; tmr = 800;
                   strng = "Please enlarge window."; launch_dialog(); }
           else { mode = 1; strng = vfp.c_str(); filesys_dialog(); }
-	}
-	else if ((key == XK_w || key == XK_Prior || key == XK_KP_Prior)
+        }
+        else if ((key == XK_w || key == XK_Prior || key == XK_KP_Prior)
                 && mode == 0) accelerate = deep;
-	else if ((key == XK_s || key == XK_Next || key == XK_KP_Next)
+        else if ((key == XK_s || key == XK_Next || key == XK_KP_Next)
                 && mode == 0) accelerate = deep;
         break;
       case ButtonPress:
@@ -1061,13 +1061,13 @@ int main() {
           XSetIconName(dis, win, strng.c_str());
           mode = 0;
         }
-	zoom(false);
+        zoom(false);
         break;
       case ClientMessage:
-	if (evnt.xclient.message_type == DRAW_PG_FINISHED) {
+        if (evnt.xclient.message_type == DRAW_PG_FINISHED) {
           dialog_return();
         }
-	else if ((Atom) evnt.xclient.data.l[0] == WM_DELETE_WINDOW)
+        else if ((Atom) evnt.xclient.data.l[0] == WM_DELETE_WINDOW)
                 loop = false;
         break;
       case SelectionClear:
@@ -1080,13 +1080,13 @@ int main() {
             Atom mytargets[] = { utf8str, XA_STRING };
             XChangeProperty(dis, sev->requestor, sev->property,
                     XA_ATOM, 32, PropModeReplace,
-		    reinterpret_cast<unsigned char*>(mytargets), 4);
+                    reinterpret_cast<unsigned char*>(mytargets), 4);
         }
-	else {
+        else {
         XChangeProperty(dis, sev->requestor, sev->property,
                utf8str, 8,  PropModeReplace,
                (unsigned char *)clp.c_str(), clp.size());
-	}
+        }
         ssev.property = sev->property;
         ssev.target = sev->target;
         ssev.type = SelectionNotify;

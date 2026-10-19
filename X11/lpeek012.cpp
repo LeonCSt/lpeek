@@ -5,7 +5,7 @@
          to other clients.
        Execution resumes in the DestroyNotify event back in
          lpeek011.cpp when this dialog closes.
-       g++ -I/usr/include/freetype2 lpeek011.cpp lpeek012.cpp -o lpeek -lX11 -lXext -lfreetype
+       g++ -DCONF_DIR='""' -DSHARE_DIR='""' -I/usr/include/freetype2 lpeek011.cpp lpeek012.cpp -o lpeek -lX11 -lXext -lfreetype
        - - - - - -   prefix with the following for debug   - - - - - -
     g++ -fsanitize=address -fno-omit-frame-pointer -g -O1 . . . 
     g++ -fsanitize=thread -g -O1 . . .
@@ -152,8 +152,8 @@ std::string lower_case(std::string str) {
     if (str[i] < 128) {
       if (!(str[i] == 46 && i == 0)) {
         if (str[i] > 64 && str[i] < 91) rt[k] = str[i] + 32;
-	else rt[k] = str[i];
-	k++;
+        else rt[k] = str[i];
+        k++;
       }
     }
     else { rt[k] = str[i]; k++; }
@@ -366,7 +366,7 @@ void list_metrics() {
         sm += "/"; j++; f = true;
       }
       else if(entry.is_regular_file()) {
- 	int rc = ::access(entry.path().c_str(), R_OK);
+        int rc = ::access(entry.path().c_str(), R_OK);
         if (rc != 0) d = true;
       }
       u = str_places(sm);
@@ -374,13 +374,13 @@ void list_metrics() {
       lc = lower_case(sm);
       if (f) {
         u = lc[0] - 97;
-	if (u < 0 || u > 25) u = 0;
+        if (u < 0 || u > 25) u = 0;
         i = m[u]; k = Ldv; Ldv++;
         for (g = u + 1; g < 26; g++) m[g]++;
       }
       else {
         u = lc[0] - 71;
-	if (u < 26 || u > 51) u = 26;
+        if (u < 26 || u > 51) u = 26;
         i = Ldv + m[u]; k = num;
         for (g = u + 1; g < 52; g++) m[g]++;
       }
@@ -611,52 +611,52 @@ void maind() {
       case KeyPress:
         XLookupString(&evntd.xkey, &textd, 1, &keyd, 0);
         if (keyd == XK_Control_L) lfdctl = true;
-	if (!dredraw) break;
+        if (!dredraw) break;
         if ((keyd == XK_w || keyd == XK_Prior || keyd == XK_KP_Prior)
                 && dvM > 0) {
           i = dvI - fov; if (i < 0) i = 0;
-	  if (i != dvI) {
+          if (i != dvI) {
             dvI = i;
             if (mode == 1) { std::thread dt1(draw_list); dt1.detach(); }
             else if (mode > 99 && mode < 200)
                     { std::thread dt1(msgbox); dt1.detach(); }
           }
-	}
+        }
         else if ((keyd == XK_s || keyd == XK_Next || keyd == XK_KP_Next)
                 && dvM > 0) {
           i = dvI + fov; if (i > dvM) i = dvM;
           if (i != dvI) {
           dvI = i;
             if (mode == 1) { std::thread dt1(draw_list); dt1.detach(); }
-	    else if (mode > 99 && mode < 200)
+            else if (mode > 99 && mode < 200)
                     { std::thread dt1(msgbox); dt1.detach(); }
           }
-	}
-	else if (keyd == XK_Up || keyd == XK_KP_Up || keyd == XK_k) {
+        }
+        else if (keyd == XK_Up || keyd == XK_KP_Up || keyd == XK_k) {
           if (mode == 1) {
-	    if (hlt == -1) {
+            if (hlt == -1) {
                     hlt = fov; std::thread dt2(highlight); dt2.detach(); }
-	    else if (hlt == 0 && dvM > 0 && dvI > 0) {
+            else if (hlt == 0 && dvM > 0 && dvI > 0) {
                     dvI--; std::thread dt1(draw_list); dt1.detach(); } 
- 	    else if (hlt > 0) {
+            else if (hlt > 0) {
                     hlt--; std::thread dt2(highlight); dt2.detach(); }
-	  }
-	  else if (mode > 99 && mode < 200 && dvM > 0 && dvI > 0) {
+          }
+          else if (mode > 99 && mode < 200 && dvM > 0 && dvI > 0) {
                   dvI--; std::thread dt1(msgbox); dt1.detach(); }
-	}
-	else if (keyd == XK_Down || keyd == XK_KP_Down || keyd == XK_j) {
+        }
+        else if (keyd == XK_Down || keyd == XK_KP_Down || keyd == XK_j) {
           if (mode == 1) {
-	    if (hlt == fov + 1) {
+            if (hlt == fov + 1) {
                     hlt = fov; std::thread dt2(highlight); dt2.detach(); }
-	    else if (hlt == fov && dvM > 0 && dvI < dvM) {
+            else if (hlt == fov && dvM > 0 && dvI < dvM) {
                     dvI++; std::thread dt1(draw_list); dt1.detach(); } 
- 	    else if (hlt < fov) {
+            else if (hlt < fov) {
                     hlt++; std::thread dt2(highlight); dt2.detach(); }
-	  }
-	  else if (mode > 99 && mode < 200 && dvM > 0 && dvI < dvM) {
+          }
+          else if (mode > 99 && mode < 200 && dvM > 0 && dvI < dvM) {
                   dvI++; std::thread dt1(msgbox); dt1.detach(); }
-	}
-	else if ((keyd == XK_space || keyd == XK_Return
+        }
+        else if ((keyd == XK_space || keyd == XK_Return
                 || keyd == XK_KP_Enter) && mode == 1 && hltA) {
           if (hlt < fov && lf[ls[hlt + dvI]] != 9) {
             if (strD != "/") strD.push_back(47);
@@ -665,37 +665,37 @@ void maind() {
             if (hlt + dvI < Ldv) share = 0; else share = 1;
             strng = strD;
             eventloop = false;
-	  }
+          }
           else if(hlt == fov && strD.size() > 1) {
             lpth = lpth.parent_path();
-	    strD = lpth.c_str();
-	    if (strD != "/") strD.push_back(47);
-	    share = 0; strng = strD;
-	    eventloop = false;
+            strD = lpth.c_str();
+            if (strD != "/") strD.push_back(47);
+            share = 0; strng = strD;
+            eventloop = false;
       	  }
         }
-	else if ((keyd == XK_BackSpace || keyd == XK_Left
+        else if ((keyd == XK_BackSpace || keyd == XK_Left
                 || keyd == XK_KP_Left) && mode == 1 && strD.size() > 1) {
           lpth = lpth.parent_path();
           strD = lpth.c_str();
           if (strD != "/") strD.push_back(47);
           share = 0; strng = strD;
           eventloop = false;
-	}
+        }
         break;
       case KeyRelease:
         XLookupString(&evntd.xkey, &textd, 1, &keyd, 0);
         if (keyd == XK_Control_L) lfdctl = false;
-	else if (keyd == XK_Escape || keyd == XK_q) {
+        else if (keyd == XK_Escape || keyd == XK_q) {
           if (mode == 1) share = -1;
           eventloop = false;
-	}
+        }
         else if (mode == 1 && dredraw && lfdctl && keyd == XK_v) {
           if (select_own) getclipboard();
-	  else {
+          else {
             operation = 2;
             XConvertSelection(dis, clpbrd, trgts, prop, dlg, CurrentTime);
-	  }
+          }
         }
         else if (mode == 1 && lfdctl && keyd == XK_c) {
           operation = 1;
@@ -707,49 +707,49 @@ void maind() {
         if (evntd.xbutton.button == 1) {
           dmsdn = true; dclick = true; dYhst = dmy;
         }
-	if (evntd.xbutton.button == 4) {
-	  if (mode == 1 && dredraw && dvI > 0) {
+        if (evntd.xbutton.button == 4) {
+          if (mode == 1 && dredraw && dvI > 0) {
                   dvI--; std::thread dt1(draw_list); dt1.detach(); }
-	  if (mode > 99 && mode < 200 && dredraw && dvI > 0) {
+          if (mode > 99 && mode < 200 && dredraw && dvI > 0) {
                   dvI--; std::thread dt1(msgbox); dt1.detach(); }
-	}
-	if (evntd.xbutton.button == 5) {
-	  if (mode == 1 && dredraw && dvI < dvM) {
+        }
+        if (evntd.xbutton.button == 5) {
+          if (mode == 1 && dredraw && dvI < dvM) {
                   dvI++; std::thread dt1(draw_list); dt1.detach(); }
-	  if (mode > 99 && mode < 200 && dredraw && dvI < dvM) {
+          if (mode > 99 && mode < 200 && dredraw && dvI < dvM) {
                   dvI++; std::thread dt1(msgbox); dt1.detach(); }
-	}
+        }
         break;
       case ButtonRelease:
         if (evntd.xbutton.button == 1) {
           dmsdn = false;
-	  if (!pointerdialog) {
+          if (!pointerdialog) {
             if (dclick) {
               if (mode == 1) share = -1;
-	      eventloop = false;
+              eventloop = false;
             }
-	  }
-	  else {
+          }
+          else {
             if (mode == 1 && dclick && dredraw) {
               if (hlt < fov && lf[ls[hlt + dvI]] != 9) {
                 if (strD != "/") strD.push_back(47);
                 j = ls[hlt + dvI + 1] - 1;
                 for (i = ls[hlt + dvI]; i < j; i++) strD.push_back(lf[i]);
                 if (hlt + dvI < Ldv) share = 0; else share = 1;
-		strng = strD;
+                strng = strD;
                 eventloop = false;
-	      }
-	      else if(hlt == fov && strD.size() > 1) {
+              }
+              else if(hlt == fov && strD.size() > 1) {
                 lpth = lpth.parent_path();
-	        strD = lpth.c_str();
-	        if (strD != "/") strD.push_back(47);
-	        share = 0; strng = strD;
-	        eventloop = false;
-	      }
-	    }
+                strD = lpth.c_str();
+                if (strD != "/") strD.push_back(47);
+                share = 0; strng = strD;
+                eventloop = false;
+              }
+            }
           }
-	}
-	else if (evntd.xbutton.button == 2 && mode == 1 && dredraw) {
+        }
+        else if (evntd.xbutton.button == 2 && mode == 1 && dredraw) {
           if (select_own) getclipboard();
           else {
             operation = 2;
@@ -757,12 +757,12 @@ void maind() {
                     CurrentTime);
           }
         }
-	break;
+        break;
       case EnterNotify:
         pointerdialog = true;
         break;
       case LeaveNotify:
-	if (evntd.xcrossing.mode == NotifyNormal) {
+        if (evntd.xcrossing.mode == NotifyNormal) {
           pointerdialog = false;
           if (!dmsdn && mode == 1 && dredraw && hltHist != -1) {
                   hlt = -1; std::thread dt2(highlight); dt2.detach(); }
@@ -770,42 +770,42 @@ void maind() {
         break;
       case MotionNotify:
         dmy = evntd.xbutton.y;
-	if (dclick) {
+        if (dclick) {
           i = dmy - dYhst;
           if (i > 3 || i < -3) dclick = false;
         }
         if (pointerdialog) {
           if (mode == 1) {
             if (dmsdn) {
-  	      if (dvM > 0 && !dclick) {
-	        d = (dmy - dYhst) / (double)dvS;
-	        i = dvI + d * (dvM + 1) + 0.5;
-	        if (i > dvM) i = dvM;
-	        if (i < 0) i = 0;
-	        if (dredraw && i != dvI) {
-	          dYhst = dmy; dvI = i;
-		  std::thread dt1(draw_list); dt1.detach();
-	        }
-	      }
-	    }
-	    else {
+              if (dvM > 0 && !dclick) {
+                d = (dmy - dYhst) / (double)dvS;
+                i = dvI + d * (dvM + 1) + 0.5;
+                if (i > dvM) i = dvM;
+                if (i < 0) i = 0;
+                if (dredraw && i != dvI) {
+                  dYhst = dmy; dvI = i;
+                  std::thread dt1(draw_list); dt1.detach();
+                }
+              }
+            }
+            else {
               i = (dmy - thick) / txtH;
-	      if (dredraw && hlt != i) {
+              if (dredraw && hlt != i) {
                       hlt = i; std::thread dt2(highlight); dt2.detach(); }
-	    }
-	  }
-	  else if (mode > 99 && mode < 200 && dmsdn) {
-  	    if (dvM > 0 && dYhst != dmy) {
-	      d = (dmy - dYhst) / (double)dvS;
-	      i = dvI + d * (dvM + 1) + 0.5;
+            }
+          }
+          else if (mode > 99 && mode < 200 && dmsdn) {
+            if (dvM > 0 && dYhst != dmy) {
+              d = (dmy - dYhst) / (double)dvS;
+              i = dvI + d * (dvM + 1) + 0.5;
               if (i > dvM) i = dvM;
-	      if (i < 0) i = 0;
-	      if (dredraw && i != dvI) {
-	        dYhst = dmy; dvI = i;
-		std::thread dt1(msgbox); dt1.detach();
-	      }
-	    }
-	  }
+              if (i < 0) i = 0;
+              if (dredraw && i != dvI) {
+                dYhst = dmy; dvI = i;
+                std::thread dt1(msgbox); dt1.detach();
+              }
+            }
+          }
         }
         break;
       case Expose:
@@ -813,7 +813,7 @@ void maind() {
         if (!f && mode == 1) { listbox(); f = true; break; }
         if (!f && mode > 99) { msgbox(); f = true; break; }
         paintflag = true;
-	f = true;
+        f = true;
         break;
       case ClientMessage:
         if ((Atom) evntd.xclient.data.l[0] == WM_DELETE_WINDOW) {
@@ -831,18 +831,18 @@ void maind() {
                   hnd = strng; tmr = 1000; share = 2; eventloop = false; }
           else if (operation == 2) gettargets();
           else if (operation == 3 && dredraw) {getclipboard(); operation = 0;}
-	  else if (operation == 1) {
-	    if (!select_own) {
+          else if (operation == 1) {
+            if (!select_own) {
               XSetSelectionOwner(dis, clpbrd, sel_owner_win, CurrentTime);
-	    }
-	    if (XGetSelectionOwner(dis, clpbrd) == sel_owner_win) {
+            }
+            if (XGetSelectionOwner(dis, clpbrd) == sel_owner_win) {
               select_own = true;
               clp = strng;
               tmr = 600; share = 6; eventloop = false;
-            } else printf("XGetSelectionOwner failed.");
-	  operation = 0;
-	  }
-	}
+            } else printf("XGetSelectionOwner failed.\n");
+            operation = 0;
+          }
+        }
         break;
       case SelectionRequest:
         dsev = (XSelectionRequestEvent*)&evntd.xselectionrequest;
@@ -850,9 +850,9 @@ void maind() {
           Atom mytargets[] = {utf8str, XA_STRING};
           XChangeProperty(dis, dsev->requestor, dsev->property,
                   XA_ATOM, 32, PropModeReplace,
-		  reinterpret_cast<unsigned char*>(mytargets), 2);
+                  reinterpret_cast<unsigned char*>(mytargets), 2);
         }
-	else {
+        else {
           XChangeProperty(dis, dsev->requestor, dsev->property,
                   utf8str, 8,  PropModeReplace,
                   (unsigned char *)clp.c_str(), clp.size());
