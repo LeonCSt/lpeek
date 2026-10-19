@@ -1,21 +1,19 @@
-## **Lpeek** a GUI binary file viewer!
+## **Lpeek** Manual install instructions
 
-Quickly navigate through file system and view any regular file.
+Copy or clone all the following files to one directory:-
 
-Use mouse or keyboard controls.
+Makefile
+lpeek010.h
+lpeek011.cpp
+lpeek012.cpp
+lpeek.conf
+lpeek_example.bin
+FreeMono.otf
 
-Suited to tiled or floating layout.
+Then run:- 
+sudo make install
 
-User has generous GUI options on element size, and window appearance.
+To uninstall, run:-
+sudo make clean
+sudo make uninstall
 
-So far, only an X11 version is available. Pending Wayland and Windows versions.
-
-Manual install instruction provided. Plus the ability to carry a portable USB instance of the app.
-
-Stand alone compilation without the need for themes or graphical support.
-
-Fast response and scrolling but lightweight in size and cpu requirement.
-
-Any comments, suggestions and criticisms welcome at https://github.com/LeonCSt/beginner_code/discussions
-
-Regards ♡ ☺ ☮
