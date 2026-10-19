@@ -18,12 +18,12 @@ lpeek_example.bin
 FreeMono.otf
 
 
-Then run:-
+## Then run:-
  
 sudo make install
 
 
-To uninstall, run:-
+## To uninstall, run:-
 
 sudo make clean
 
