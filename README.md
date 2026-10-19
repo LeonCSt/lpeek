@@ -22,19 +22,21 @@ Regards ♡ ☺ ☮
 
 ## Information about Lpeek
 
-  Action    |  Keyboard   |  Mouse
-            |             |
-Info        | I           |
-Darkmode    | Y           |
-FileSystem  | F           | RightClick
-Scroll      | W/S PgUp/Dn | LeftDrag
-Crawl       | K/J   Up/Dn | Wheel
-Focus       | HJKL Arrows | Pointer
-Select      | Enter Space | LeftClick
-Zoom        | M  and  N   | Ctrl Wheel
-Clipboard   | CtrlC CtrlV |
-Back Dir    | Bckspc Left |
-Exit        | Q  or  Esc  |
+
+|  Action    |  Keyboard   |  Mouse      |
+| ---------- | ----------- | ----------- |
+| Info       | I           |             |
+| Darkmode   | Y           |             |
+| FileSystem | F           | RightClick  |
+| Scroll     | W/S PgUp/Dn | LeftDrag    |
+| Crawl      | K/J   Up/Dn | Wheel       |
+| Focus      | HJKL Arrows | Pointer     |
+| Select     | Enter Space | LeftClick   |
+| Zoom       | M  and  N   | Ctrl Wheel  |
+| Clipboard  | CtrlC CtrlV |             |
+| Back Dir   | Bckspc Left |             |
+| Exit       | Q  or  Esc  |             |
+
 
   FreeMono.otf is bundled with Lpeek. Most probably you already have that on your system. If so, in lpeek.conf, the FontPath can be set to an existing FreeMono.otf file (using sudo edit). Then you can delete the shipped FreeMono.otf which was placed in /usr/local/share/lpeek/ . You may try a different font file, but results are undefined.
 
