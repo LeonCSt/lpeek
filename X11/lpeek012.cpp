@@ -626,7 +626,7 @@ void maind() {
                 && dvM > 0) {
           i = dvI + fov; if (i > dvM) i = dvM;
           if (i != dvI) {
-          dvI = i;
+            dvI = i;
             if (mode == 1) { std::thread dt1(draw_list); dt1.detach(); }
             else if (mode > 99 && mode < 200)
                     { std::thread dt1(msgbox); dt1.detach(); }
