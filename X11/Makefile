@@ -2,7 +2,7 @@
 TARGET   := lpeek
 VERSION  := 0.1
 DESC     := Regular File Viewer
-WWW      := "<my GitHub link>"
+WWW      := "https://github.com/LeonCSt/lpeek"
 LICENSE  := GNU
 
 CXX      := g++
