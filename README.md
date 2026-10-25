@@ -8,7 +8,7 @@ Suited to tiled or floating layout.
 
 User has generous GUI options on element size, and window appearance.
 
-So far, only an X11 version is available. Pending Wayland and Windows versions.
+So far, only an X11 version is available.
 
 Manual install instruction provided. Plus the ability to carry a portable USB instance of the app.
 
@@ -57,5 +57,6 @@ Regards ♡ ☺ ☮
   GNU License.
 
   lpeek developer: Leon Stanley.
-  Australia 25th Sep 2026"
+
+  Australia 25th Sep 2026
 
