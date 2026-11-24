@@ -34,28 +34,28 @@ sudo make clean
 sudo make uninstall
 
 
-# Additional notes about Wayland version of Lpeek
+### Additional notes about Wayland version of Lpeek
 
-As yet there is no icon for the Wayland version of Lpeek.
+As yet there is no **icon** for the Wayland version of Lpeek.
 
-xdg-shell-protocols.cpp | Needs to reside in the working directory, for compile. Initially generated with the wayland-scanner, then modified to suit g++ compilation. Either copy from this repository or make your own, by: -
+xdg-shell-protocols.cpp  needs to reside in the working directory, for compile. Initially generated with the wayland-scanner, then modified to suit g++ compilation. Either copy from this repository, or make your own by:
 
-    In the working directory : -
+In the working directory:
 
-  wayland-scanner private-code \ < /usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml \ > xdg-shell-protocol.cpp
+> wayland-scanner private-code \ < /usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml \ > xdg-shell-protocol.cpp
 
 
 MODIFY xdg-shell-protocol.cpp TO SUIT g++ COMPILER AS FOLLOWS:-
 
-    1) Delete the first 52 lines e.g. all includes and externs
+1. Delete the first 52 lines e.g. all includes and externs
 
-    2) Replace with #include <wayland-util.h>
+2. Replace with #include <wayland-util.h>
 
-        and         #include "xdg-shell-client-protocol.h"
+  and         #include "xdg-shell-client-protocol.h"
 
-    3) Remove all WL_PRIVATE prepends (all 5 of them).
+3. Remove all WL_PRIVATE prepends (all 5 of them).
 
-   ** note **    xdg-shell-client-protocol.h   is also needed in the working directory for #include "" :-
+**note**    xdg-shell-client-protocol.h   is also needed in the working directory for #include "" :-
 
-  wayland-scanner client-header \ < /usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml \ > xdg-shell-client-protocol.h
+> wayland-scanner client-header \ < /usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml \ > xdg-shell-client-protocol.h
 
